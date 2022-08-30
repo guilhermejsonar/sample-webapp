@@ -8,6 +8,39 @@
 	<script type="text/javascript" language="javascript"
 		src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+	<script>
+		$(window).ready(
+			function () {
+				$.get("/department", function (data, status) {
+					data.forEach(function (d, i) {
+						var content = "<tr><td>" + d.id;
+						content += "</td><td>" + d.name;
+						content += "</td><td>" + d.numberOfEmployees;
+						content += "</td><td><a class='btn btn-primary' href='department-form.html?id=" + d.id
+							+ "'>Edit</a> ";
+						content += "<a class='btn btn-danger' onClick=remove(" + d.id
+							+ ") href='#'>Delete</a>";
+						content += "</td></tr>";
+						$('#data').append(content);
+					})
+					$('#tb-employee').DataTable();
+				});
+			});
+		function remove(id) {
+			$.ajax({
+				url: "/department/" + id,
+				type: 'DELETE',
+				success: function (data, status) {
+					if (status == "success") {
+						alert("Record Deleted")
+						window.location.replace("/departments.html")
+					} else {
+						alert(status + " Something went wrong")
+					}
+				}
+			})
+		}
+	</script>
 </head>
 
 <body>
@@ -39,28 +72,25 @@
 	<div class="container">
 		<nav class="navbar">
 			<div class="navbar-header">
-				<h1>Welcome, Sample App</h1>
-
-				<div class="row">
-					<div class="col">
-						<a href="/departments.html">
-							<div class="card bg-light text-dark">
-								<div class="card-body">Departments</div>
-							</div>
-						</a>
-					</div>
-					<div class="col">
-						<a href="/employees.html">
-							<div class="card bg-light text-dark">
-								<div class="card-body">Employees</div>
-							</div>
-						</a>
-					</div>
-				</div>
-
-
+				<h1>Departments</h1>
 			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a class="btn btn-success" href="department-form.html">Add New Department</a></li>
+			</ul>
 		</nav>
+		<table id="tb-dept" class="table table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Number of Employees</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody id="data">
+
+			</tbody>
+		</table>
 	</div>
 </body>
 

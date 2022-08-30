@@ -13,26 +13,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lab.employee.entity.Employee;
+import com.lab.employee.entity.Department;
 import com.lab.employee.repository.DepartmentRepository;
-import com.lab.employee.repository.EmployeeRepository;
 
 @RestController
-@RequestMapping("/employee")
-public class EmployeeController {
+@RequestMapping("/department")
+public class DepartmentController {
 
 	@Autowired
-	EmployeeRepository employeeRepository;
+	DepartmentRepository repository;
 
 	@GetMapping()
-	public ResponseEntity<List<Employee>> getAllEmployees() {
-		List<Employee> data = employeeRepository.findAll();
+	public ResponseEntity<List<Department>> getAll() {
+		List<Department> data = repository.findAll();
 		return ResponseEntity.ok().body(data);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Employee> getEmployee(@PathVariable("id") Integer id) {
-		Optional<Employee> employee = employeeRepository.findById(id);
+	public ResponseEntity<Department> get(@PathVariable("id") Integer id) {
+		Optional<Department> employee = repository.findById(id);
 		if (employee.isPresent())
 			return ResponseEntity.ok().body(employee.get());
 		else
@@ -40,15 +39,15 @@ public class EmployeeController {
 	}
 
 	@PostMapping()
-	public Employee saveEmployee(@RequestBody Employee employee) {
-		return employeeRepository.save(employee);
+	public Department save(@RequestBody Department employee) {
+		return repository.save(employee);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Boolean> deleteEmployee(@PathVariable Integer id) {
+	public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
 		Boolean response = true;
 		try {
-			employeeRepository.deleteById(id);
+			repository.deleteById(id);
 		} catch (Exception e) {
 			response = false;
 		}
