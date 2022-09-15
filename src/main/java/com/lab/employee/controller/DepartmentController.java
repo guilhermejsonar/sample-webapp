@@ -23,16 +23,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lab.employee.entity.Department;
+import com.lab.employee.license.LicenseInfo;
 import com.lab.employee.repository.DepartmentRepository;
 
 @RestController
 @RequestMapping("/department")
 public class DepartmentController {
+	
+	public static final String DEPARTMENT_SIZE_FEATURE = "Departments";
 
 	@Autowired
 	DepartmentRepository repository;
+	
+	@Autowired
+	LicenseInfo licenseInfo;
 
-	@GetMapping("/")
+	@GetMapping()
 	public ResponseEntity<List<Department>> getAll() {
 		List<Department> data = repository.findAll();
 		return ResponseEntity.ok().body(data);
