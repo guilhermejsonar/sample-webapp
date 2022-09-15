@@ -52,9 +52,10 @@ Activate License file
    - Generate Response
    - View -> Download Response
    
- - 
+ - run `flexnetlsadmin.jar` with activate and load with Downloaded Response
 
 ``` bash
+cd /opt/flexnetls-x64_linux-2022.09.0/enterprise/
 java -jar flexnetlsadmin.jar -server http://localhost:7070/api/1.0/instances/A3Z723JS8YY1 -activate -load AEA79A264033.bin
 ```
 
