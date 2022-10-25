@@ -1,0 +1,3 @@
+#lfs.url=https://flex1791-uat.compliance.flexnetoperations.com/deviceservices
+#lfs.syncTo.enabled=true
+#lfs.capability.repeats=10m
