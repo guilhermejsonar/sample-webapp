@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flexnet.lm.FlxException;
 import com.lab.employee.entity.Department;
 import com.lab.employee.license.LicenseInfo;
+import com.lab.employee.license.LicenseTelemetryGenerator;
 import com.lab.employee.repository.DepartmentRepository;
 
 @RestController
@@ -37,6 +40,9 @@ public class DepartmentController {
 	
 	@Autowired
 	LicenseInfo licenseInfo;
+	
+	@Autowired
+	LicenseTelemetryGenerator telemetryGenerator;
 
 	@GetMapping()
 	public ResponseEntity<List<Department>> getAll() {
@@ -45,13 +51,28 @@ public class DepartmentController {
 	}
 
 	@GetMapping("/metrics")
-	public ResponseEntity<Resource> getMetricsFile() throws IOException {
+	public ResponseEntity<Resource> getMetricsFile() throws IOException, FlxException {
 		List<Department> data = repository.findAll();
+		
+		HashMap<String, String> customMetricsMap = getCustomMetricsMap(data);
+		
+		telemetryGenerator.generateCustomMetrics(customMetricsMap);
 
 		String file = saveTempFile(data);
 		return ResponseEntity.ok().contentType(APPLICATION_OCTET_STREAM)
 				.header("Content-Disposition", String.format("attachment; filename=\"%s\"", "metric.json"))
 				.body(getFileAsResource(file));
+	}
+
+	private HashMap<String, String> getCustomMetricsMap(List<Department> data) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("dep_size", String.valueOf(data.size()));
+		data.forEach(d -> {
+			map.put("dep_" + d.getId() + "_name", d.getName());
+			map.put("dep_" + d.getId() + "_size", String.valueOf(d.getNumberOfEmployees()));
+		});
+		
+		return map;
 	}
 
 	@GetMapping("/{id}")
