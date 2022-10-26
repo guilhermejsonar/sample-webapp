@@ -76,9 +76,16 @@ serverofflinesynctool -url http://localhost:7070/api/1.0/sync_message/offline -g
 #from docker
 sudo docker exec <container_id:local-license-server> /opt/flexnetls-x64_linux-2022.09.0/enterprise/serverofflinesynctool -url http://localhost:7070/api/1.0/sync_message/offline -generate /opt/export/
 
+#shell docker
+sudo docker exec -it local-license-server /bin/sh
+
+#copy file from docker
+sudo docker cp local-license-server:/opt/export/<<20221026T230527.fnesync>> .
+
 ```
 
 Copy the output file that should have name like `20220920T174130.fnesync`
+
 Upload file into backoffice:
  - Go to Devices ->  Offline Device Management 
  - Select Upload synchronization history
