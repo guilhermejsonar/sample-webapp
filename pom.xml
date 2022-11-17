@@ -42,7 +42,53 @@
 			<artifactId>commons-collections4</artifactId>
 			<version>4.4</version>
 		</dependency>
-
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		</dependency>
+		
+		<!--External Libraries  -->
+		<dependency>
+	      <groupId>com.revenera</groupId>
+	      <artifactId>EccpressoAll</artifactId>
+	      <version>1.0</version>
+	    </dependency>
+		<dependency>
+	      <groupId>com.revenera</groupId>
+	      <artifactId>flxBinary</artifactId>
+	      <version>1.0</version>
+	    </dependency>
+		<dependency>
+	      <groupId>com.revenera</groupId>
+	      <artifactId>flxClient</artifactId>
+	      <version>1.0</version>
+	    </dependency>
+		<dependency>
+	      <groupId>com.revenera</groupId>
+	      <artifactId>flxClientNative</artifactId>
+	      <version>1.0</version>
+	    </dependency>
+		<dependency>
+	      <groupId>com.revenera</groupId>
+	      <artifactId>flxPublicTools</artifactId>
+	      <version>1.0</version>
+	    </dependency>
+		<dependency>
+	      <groupId>com.revenera</groupId>
+	      <artifactId>flxTools</artifactId>
+	      <version>1.0</version>
+	    </dependency>
+		<dependency>
+	      <groupId>com.revenera</groupId>
+	      <artifactId>tra-gen</artifactId>
+	      <version>1.0</version>
+	    </dependency>
+		<dependency>
+	      <groupId>com.revenera</groupId>
+	      <artifactId>tra-run</artifactId>
+	      <version>1.0</version>
+	    </dependency>
+	    
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
